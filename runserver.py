@@ -178,11 +178,11 @@ def keys(host, port, db):
         perpage = int(request.args.get("perpage", "10"))
         pattern = request.args.get('pattern', '*')
         dbsize = r.dbsize()
-        keys = sorted(r.keys(pattern))
+        keys = [k.decode('utf-8') for k in sorted(r.keys(pattern))]
         limited_keys = keys[offset:(perpage+offset)]
         types = {}
         for key in limited_keys:
-            types[key] = r.type(key)
+            types[key] = r.type(key).decode('utf-8')
         return render_template('keys.html',
             host=host,
             port=port,
@@ -203,7 +203,7 @@ def key(host, port, db, key):
     Show a specific key.
     key is expected to be URL-safe base64 encoded
     """
-    key = base64.urlsafe_b64decode(key.encode("utf8"))
+    key = base64.urlsafe_b64decode(key).decode('utf-8')
     s = time.time()
     r = redis.StrictRedis(host=host, port=port, db=db)
     dump = r.dump(key)
@@ -213,7 +213,7 @@ def key(host, port, db, key):
     #    abort(404)
     size = len(dump)
     del dump
-    t = r.type(key)
+    t = r.type(key).decode('utf-8')
     ttl = r.pttl(key)
     if t == "string":
         val = r.get(key).decode('utf-8', 'replace')
@@ -271,8 +271,11 @@ def pubsub_ajax(host, port, db):
 def urlsafe_base64_encode(s):
     if type(s) == 'Markup':
         s = s.unescape()
+    if type(s) == bytes:
+        s = s.decode('utf-8')
     s = s.encode('utf8')
     s = base64.urlsafe_b64encode(s)
+    s = s.decode('utf-8')
     return Markup(s)
 
 
