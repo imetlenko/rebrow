@@ -1,0 +1,71 @@
+#terminal2 {
+    background-color: #3C3F41;
+    color: #A5C024;
+    height: 200px;
+    width: 200px;
+    font-family: Monaco, monospace;
+}
+input, textarea {
+    padding: 4px;
+}
+#terminal {
+    margin: 1em 0 0;
+    padding: .25em 0;
+    height: 800px;
+    background: #3C3F41;
+    overflow: auto;
+    font-family: Monaco, monospace;
+    font-size: 13px;
+}
+
+  #terminal div.line {
+    padding: 0;
+  }
+
+  #terminal input {
+    width: 880px;
+    border: none;
+    display: inline;
+    background: #3C3F41;
+    color: #A5C024;
+    font-family: Monaco, monospace;
+    font-size: 13px;
+    outline: none;
+  }
+
+  #terminal p, #terminal pre {
+    color: #A5C024;
+    color: #A5C024 !important;
+    margin-bottom: 0px;
+    margin-left: 12px;
+  }
+
+  #terminal a {
+    color:  #A5C024;
+  }
+
+  #terminal span.prompt {
+    color: #A5C024;
+    margin-left: 12px;
+  }
+
+  #terminal input:focus{ box-shadow:none; outline: none; }
+
+  .chart-container {
+    position: relative;
+    width:880px;
+    height:225px;
+    margin-top: 10px;
+  }
+
+  .label {
+    padding: none;
+    font-size: inherit;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    background-color: #404040;
+    -webkit-border-radius: none;
+    -moz-border-radius: none;
+    border-radius: none;
+  }

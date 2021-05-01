@@ -6,8 +6,13 @@ import time
 from datetime import datetime, timedelta
 import os
 import base64
+import sys
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+
+cors = CORS(app, resources={r"*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # key for cookie safety. Shal be overridden using ENV var SECRET_KEY
 app.secret_key = os.getenv("SECRET_KEY", "lasfuoi3ro8w7gfow3bwiubdwoeg7p23r8g23rg")
@@ -265,6 +270,35 @@ def pubsub_event_stream(host, port, db, pattern):
 def pubsub_ajax(host, port, db):
     return Response(pubsub_event_stream(host, port, db, pattern="*"),
            mimetype="text/event-stream")
+
+
+@app.route("/<host>:<int:port>/<int:db>/cli/")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+def cli(host, port, db):
+    """
+    Show and proccess Redis CLI terminal
+    """
+    retval = ""
+    if "X-Requested-With" in request.headers and request.headers.get("X-Requested-With") in "XMLHttpRequest":
+        command = request.args.get('command')
+        r = redis.StrictRedis(host=host, port=port, db=db)
+        res = r.execute_command(command)
+        if "info" in command:
+            for item in res:
+                retval = "{}{}: {}\n<br>".format(retval, item, res[item])
+        else:
+            if isinstance(res, bytes):
+                retval = res.decode("utf-8")
+            else:
+                retval = res
+    else:
+        s = time.time()
+        retval = render_template('cli.html',
+        host = host,
+        port = port,
+        db = db,
+        duration = time.time()-s)
+    return retval
 
 
 @app.template_filter('urlsafe_base64')

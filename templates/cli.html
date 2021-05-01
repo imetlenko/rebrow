@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/{{ host}}:{{port}}/{{ db }}/">{{ host}}:{{port}} DB {{ db }}</a></li>
+    <li class="active">Redis CLI</li>
+  </ol>
+  <div id="terminal"></div>
+{% endblock %}

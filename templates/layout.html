@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/terminal.css') }}">
 </head>
 <body>
 
@@ -39,6 +40,12 @@
             class="active"
             {% endif %}
             ><a href="/{{ host }}:{{ port }}/{{ db }}/pubsub/">PubSub</a></li>
+
+            <li
+            {% if url_for("pubsub", host=host, port=port, db=db) in request.path %}
+            class="active"
+            {% endif %}
+            ><a href="/{{ host }}:{{ port }}/{{ db }}/cli/">Redis CLI</a></li>
           {% endif %}
         </ul>
       </div><!--/.nav-collapse -->
@@ -80,6 +87,8 @@
 
   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/readline.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cli.js') }}"></script>
   <script>
   $(function () {
   	$('#serverstatus-tabs a').click(function (e) {
@@ -97,8 +106,15 @@
         $(".pubsub-messages tbody > tr:eq(20)").remove();
       };
     }
+    rebrow_cli.init({
+      cliPrompt    : 'redis-cli {{ host }}:{{ port }}/{{ db }}>',
+      absoluteUrl  : '/{{ host }}:{{ port }}/{{ db }}/'
+    });
+    $('#terminal').click(function (e) {
+      e.preventDefault()
+      $('#terminal input').focus()
+    });
   });
-  
   </script>
 </body>
 </html>
