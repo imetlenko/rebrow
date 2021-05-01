@@ -42,7 +42,7 @@
             ><a href="/{{ host }}:{{ port }}/{{ db }}/pubsub/">PubSub</a></li>
 
             <li
-            {% if url_for("pubsub", host=host, port=port, db=db) in request.path %}
+            {% if url_for("cli", host=host, port=port, db=db) in request.path %}
             class="active"
             {% endif %}
             ><a href="/{{ host }}:{{ port }}/{{ db }}/cli/">Redis CLI</a></li>
