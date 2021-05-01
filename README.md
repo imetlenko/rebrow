@@ -8,12 +8,18 @@ some runtime and configuration information.
 ## Features
 
 * Web based
-* Runs in Python 2.7
+* Runs in Python 3.6
 * Lightweight requirements
 * Search for keys using patterns
 * Delete single keys
 * Show PubSub messages
 * Show server statistics
+#### New Features
+* Redis CLI
+
+#### TODO
+* Commands Reference for Redis CLI
+* Flush DB
 
 ## Quick Start
 
@@ -39,7 +45,17 @@ Alternatively, the provided `Dockerfile` can be used to create the according ima
 When running the image, make sure to get your links right. For example, if your redis server is running in a container named `myredis`, start your rebrow container like this:
 
 ```
-docker run --rm -ti -p 5001:5001 --link myredis:myredis marian/rebrow
+docker run --rm -ti -p 5001:5001 --link myredis:myredis imetlenko/rebrow
+```
+#### Enviromnent
+
+* `HOST` - Sets the address on which Flask will run (default: 0.0.0.0)
+* `PORT` - Sets the port on which Flask will run (default: 5001)
+* `DEBUG` - default False
+* `THREADING` - default True
+
+```
+docker run --rm -ti -e DEBUG=True -e PORT=7070 -p 7070:7070 --link myredis:myredis imetlenko/rebrow
 ```
 
 Then access rebrow via `http://<your-docker-ip>:5001/` and set the host name in the login screen to `myredis`.
