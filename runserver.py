@@ -280,4 +280,8 @@ def urlsafe_base64_encode(s):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=False, port=5001, threaded=True)
+    app.run(
+        host=os.environ.get("HOST", "0.0.0.0"),
+        port=os.environ.get("PORT", 5001),
+        debug=os.environ.get("DEBUG", False),
+        threaded=os.environ.get("THREADED", True))
