@@ -8,12 +8,18 @@ some runtime and configuration information.
 ## Features
 
 * Web based
-* Runs in Python 2.7
+* Runs in Python 3.6
 * Lightweight requirements
 * Search for keys using patterns
 * Delete single keys
 * Show PubSub messages
 * Show server statistics
+#### New Features
+* Redis CLI
+
+#### TODO
+* Commands Reference for Redis CLI
+* Flush DB
 
 ## Quick Start
 
